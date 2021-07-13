@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xtml"
+      xmls:th="http://www.thymeleaf.org">
+    <head th:replace="layout/template :: head">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <header th:replace="layout/template :: header"></header>
+        <h1 th:text="#{add.pokemon}"></h1>
+        <form action="#" th:action="@{/api/pokemons/test}" th:object="${pokemon}" method="POST" >
+            
+            <label for="name" th:text="#{name}">Name</label>
+            <input type="text" name="name" th:field="*{name}" required/> 
+            <br>
+            
+            <label for="level" th:text="#{level}">Level</label>
+            <input type="number" name="level" th:field="*{level}" required/>
+            <br>
+            
+            <!-- types exist -->
+            <div th:if="${types != null and !types.empty}">
+                <label for="type" th:text="#{exist.types}">Exist Types</label>
+                <select th:field="*{types}" id="typeSelect" multiple="multiple">
+                    <option value="0">Select type</option> 
+                    <option th:each="type : ${types}" th:value="${type.idType}" th:text="${type.type}"></option>
+                </select>
+                <br>
+            </div>
+            
+            <!--
+            <div th:object="${type}">
+                <label for="type" th:text="#{new.type}">New type/s</label>
+                <input type="text" name="type" th:field="*{type.type}">
+                <br>
+            </div><!-- comment -->
+            
+            <!-- abilities exist -->
+            <div th:if="${abilities != null and !abilities.empty}">
+                <label for="ability" th:text="#{exist.abilities}">Exist Abilities</label>
+                <select th:field="*{abilities}" id="abilitiesSelect" multiple="multiple">
+                    <option value="0">Select ability</option>
+                    <option th:each="ability : ${abilities}" th:value="${ability.idAbility}" th:text="${ability.ability}"></option>
+                </select>
+                <br>
+            </div>
+            
+            <!-- new abilities
+            <label for="ability" th:text="#{abilities}">Abilities</label>
+            <input type="text" name="ability" th:value="${pokemon.abilities}" th:field="*{abilities}" required/>
+            <br> -->
+            
+            <button type="submit" name="save" value="save" th:text="#{add.pokemon}"></button>
+        </form>
+        <footer th:replace="layout/template :: footer"></footer>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xtml"
+      xmls:th="http://www.thymeleaf.org">
+    <head th:fragment="head">
+        <title>Pokedex</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <header th:fragment="header">
+            <nav>
+                <a th:href="@{/}" th:text="#{template.home}">Home</a> | 
+                <!--!<a th:href="@{/login}" th:text="#{template.login}">Login</a> |-->
+                <a th:href="@{/register}" th:text="#{template.register}">Register</a> |
+            </nav>
+        </header>
+
+        <footer th:fragment="footer">
+            <!--
+            <a th:href="@{/(lang=es)}">ES</a> |
+            <a th:href="@{/(lang=en)}">EN</a> |-->
+            <span> [[#{template.footer}]] &copy <a href="http://www.google.com" target="_blank"/>Google</span>
+            <form th:action="@{/logout}" method="POST">
+                <a href="#" onlick="this.parentNode.submit();" th:text="#{template.logout}">Logout</a>
+            </form>
+        </footer> 
+    </body>
+</html>
