@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xtml"
+      xmls:th="http://www.thymeleaf.org">
+    <head th:replace="layout/template :: head">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <header th:replace="layout/template :: header"></header>
+        <div class="container">
+            <h1 th:text="#{add.evolution}"></h1>
+            <form th:action="@{/saveEvolution}" th:object="${evolution}" method="POST">
+
+                <div th:if="${pokemons != null && !pokemons.empty}">
+                    <label for="pokemons" th:text="#{pokemons}">Pokemons</label>
+                    <select id="id" name="id">
+                        <option value="0">Select pokemon</option> 
+                        
+                        <option th:each="pok : ${pokemons}" th:value="${pok.idPokemon}" th:text="${pok.name}" name="id" id="id"></option>
+                    </select>
+                    <br>
+                    </label>
+
+                    <br>
+                    <label for="name" th:text="#{evolution.name}">Name</label>
+                    <input type="text" name="name" th:field="*{name}" required/> 
+                    <br>
+                    <!--<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>-->
+                    <label for="level" th:text="#{evolution.level}">Level</label>
+                    <input type="number" name="level" th:field="${evolution.level}" required/>
+                    <br>
+
+                    <!-- types exist -->
+                    <div th:if="${types != null and !types.empty}">
+                        <label for="type" th:text="#{exist.types}">Exist Types</label>
+                        <select th:field="*{types}" id="typeSelect" multiple="multiple">
+                            <option value="0">Select type</option> 
+                            <option th:each="type : ${types}" th:value="${type.idType}" th:text="${type.type}"></option>
+                        </select>
+                        <br>
+                    </div>
+
+                    <div>
+                        <label for="type" th:text="#{new.types}">New type/s</label>
+                        <input type="text" name="nType" th:name="nType">
+                        <br>
+                    </div>
+
+                    <!-- abilities exist -->
+                    <div th:if="${abilities != null and !abilities.empty}">
+                        <label for="ability" th:text="#{exist.abilities}">Exist Abilities</label>
+                        <select th:field="*{abilities}" id="abilitiesSelect" multiple="multiple">
+                            <option value="0">Select ability</option>
+                            <option th:each="ability : ${abilities}" th:value="${ability.idAbility}" th:text="${ability.ability}"></option>
+                        </select>
+                        <br>
+                    </div>
+
+                    <div>
+                        <label for="ability" th:text="#{new.abilities}">New ability</label>
+                        <input type="text" name="nAbility" th:name="nAbility">
+                        <br>
+                    </div>
+
+                    <button type="submit" name="save" value="save" th:text="#{add.pokemon}"></button>
+                </div>
+
+                <div th:if="${pokemons.empty || pokemons == null}">
+                    <b>Im sorry, not pokemons in system yet</b>
+                </div>
+            </form>
+        </div>
+
+        <footer th:replace="layout/template :: footer"></footer>
+    </body>
+</html>

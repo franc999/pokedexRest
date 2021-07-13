@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xtml"
+      xmls:th="http://www.thymeleaf.org"
+      xmls:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/template :: head">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <header th:replace="layout/template :: header"></header>
+        <h1>Pokemons list</h1>
+        <div th:if="${pokemons != null and !pokemons.empty}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>[[#{name}]]</th>
+                        <th>[[#{level}]]</th>
+                        <th>[[#{types}]]</th>
+                        <th>[[#{abilities}]]</th>
+                        <th>Evolutions</th>
+                        <th></th>
+                        <!--<div th:if=""><tr>[[#{evolution}]]</tr>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pokemon : ${pokemons}">
+                        <td>[[${pokemon.name}]]</td>
+                        <td>[[${pokemon.level}]]</td>
+                <div th:each="type : *{pokemon.types}">
+                    <td>[[${type.type}]]</td>
+                </div>
+                <div th:each="ability : ${pokemon.abilities}">
+                    <td>[[${ability.ability}]]</td>
+                </div>
+                <div th:if="pokemons.evolutions != null">
+                    <div th:each="evolution : ${pokemon.evolutions}">
+                        <td>[[${evolution.name}]]</td>
+                        <td>[[${evolution.level}]]</td>
+                        <div th:each="type : ${evolution.types}">
+                            <td>[[${type.type}]]</td>
+                        </div>
+                        <div th:each="ability : ${evolution.abilities}">
+                            <td>[[${ability.ability}]]</td>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <td> 
+                        <a th:href="@{/delete(idPokemon=${pokemon.idPokemon})}" class="btn btn-danger">
+                            <i class="fas fa-angle-double-right"></i>ELIMINAR
+                        </a>
+                    </td>
+                </div>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${pokemons.empty || pokemons == null}">
+            <b>Im sorry, not pokemons in system yet</b>
+        </div>
+        <footer th:replace="layout/template :: footer"></footer>
+    </body>
+</html>
